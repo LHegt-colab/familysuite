@@ -23,7 +23,6 @@ export default function InviteAcceptPage() {
 
   async function validate() {
     const { data, error } = await supabase
-      .schema('familysuite')
       .from('workspaces')
       .select('id, name')
       .eq('invite_code', code)
@@ -48,7 +47,6 @@ export default function InviteAcceptPage() {
     setStatus('accepting')
 
     const { error } = await supabase
-      .schema('familysuite')
       .from('workspace_members')
       .upsert({ workspace_id: workspace.id, user_id: user.id, role: 'member' }, { onConflict: 'workspace_id,user_id' })
 

@@ -30,7 +30,6 @@ export default function InvitePage() {
     setLoading(true)
     try {
       const { error } = await supabase
-        .schema('familysuite')
         .from('invite_tokens')
         .insert({
           workspace_id: activeWorkspace.id,

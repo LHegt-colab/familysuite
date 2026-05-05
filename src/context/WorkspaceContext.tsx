@@ -38,7 +38,6 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     }
     setLoading(true)
     const { data, error } = await supabase
-      .schema('familysuite')
       .from('workspace_members')
       .select(`role, workspaces(id, name, description, owner_id, invite_code, created_at)`)
       .eq('user_id', user.id)
@@ -72,7 +71,6 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     if (!user) throw new Error('Niet ingelogd')
 
     const { data: ws, error: wsErr } = await supabase
-      .schema('familysuite')
       .from('workspaces')
       .insert({ name, description: description || null, owner_id: user.id })
       .select()
@@ -81,7 +79,6 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     if (wsErr) throw wsErr
 
     const { error: memberErr } = await supabase
-      .schema('familysuite')
       .from('workspace_members')
       .insert({ workspace_id: ws.id, user_id: user.id, role: 'owner' })
 
